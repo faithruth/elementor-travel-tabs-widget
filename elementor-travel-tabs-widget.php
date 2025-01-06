@@ -4,7 +4,8 @@
  * Description: Elementor addon to add tourism details to page in a tab
  * Version:     1.0.0
  * Author:      Imokol Faith Ruth & Aurthur Kasirye
- * Author URI:  https://developers.elementor.com/
+ * Plugin URI:  https://github.com/faithruth/wc-iphone-swapper
+ * Author URI:  https://github.com/faithruth
  * Text Domain: elementor-travel-tabs-widget
  *
  * Requires Plugins: elementor
