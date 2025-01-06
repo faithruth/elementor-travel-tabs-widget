@@ -235,7 +235,7 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
             }
             ?>
             </ul>
-            <button class="button button--reversed next-tab" data-next="1" data-show=" . $next_tab . "><?php echo $next_tab; ?></button>
+            <button class="button button--reversed next-tab" data-next="1" data-show=" . $next_tab . "><?php echo __('View itinerary details', 'elementor-travel-tabs-widget'); ?></button>
             </div>
             <div>
                 <figure class="travel-tab__activity_map"><img src="<?php echo $activity_map['url']; ?>" alt="<?php echo $activity_map['alt']; ?>"></figure>
@@ -281,11 +281,6 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
                 }
             ?>
             </ul>
-            <?php
-            if ( ! empty( $next_tab ) ) {
-	            echo '<button class="button button--reversed next-tab" data-next="' . $tab_index . '" data-show=" . $next_tab . ">' . $next_tab . '</button>';
-            }
-            ?>
         </div>
         <?php
     }
