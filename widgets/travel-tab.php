@@ -76,6 +76,15 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 		);
 
 		$summary_repeater->add_control(
+			'title_tag',
+			[
+				'label' => __( 'Title Tag Text', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+			]
+		);
+
+		$summary_repeater->add_control(
 			'description',
 			[
 				'label' => __( 'Description', 'elementor-travel-tabs-widget' ),
@@ -100,6 +109,35 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 
 		$this->tab_section( 'itinerary' );
 		$this->tab_section( 'accommodation' );
+
+		// Add a section for your control.
+		$this->start_controls_section(
+			'notes_tab',
+			[
+				'label' => __( 'Notes Tab', 'your-plugin-domain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'notes_title',
+			[
+				'label' => __( 'Title', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+			]
+		);
+		// Add the template select control.
+		$this->add_control(
+			'template_id',
+			[
+				'label' => __( 'Select Template', 'your-plugin-domain' ),
+				'type' => \Elementor\Controls_Manager::SELECT2,
+				'options' => $this->get_elementor_templates(),
+				'description' => __( 'Choose an Elementor template to display.', 'your-plugin-domain' ),
+			]
+		);
+
+		$this->end_controls_section();
 
 		// Content Tab End
 
@@ -171,6 +209,24 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 
 	    $this->end_controls_section();
     }
+
+	/**
+	 * Get Elementor templates.
+	 *
+	 * @return array List of templates in the format [template_id => template_title].
+	 */
+	protected function get_elementor_templates() {
+		$templates = \Elementor\Plugin::$instance->templates_manager->get_source( 'local' )->get_items();
+		$options = [];
+
+		if ( ! empty( $templates ) ) {
+			foreach ( $templates as $template ) {
+				$options[ $template['template_id'] ] = $template['title'];
+			}
+		}
+
+		return $options;
+	}
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		?>
@@ -198,6 +254,13 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 	                <?php
                 }
                 ?>
+	                <?php
+	                if ( ! empty( $settings['notes_title'] ) ) {
+		                ?>
+                        <li class="travel-tab__nav-item"><a href="#notes_details"  class="travel-tab__nav-button" id="notes"> <?php echo esc_attr__($settings['notes_title'] ); ?> </a></li>
+		                <?php
+	                }
+	                ?>
             </ul>
             </div>
             <div id="summary_details">
@@ -208,6 +271,14 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
             </div>
             <div id="accommodation_details">
                 <?php $this->itinerary_section( $settings['accommodation_items'],  3,'' ); ?>
+            </div>
+            <div id="notes_details">
+		        <?php
+		        if ( ! empty( $settings['template_id'] ) ) {
+			        // Render the selected Elementor template
+			        echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $settings['template_id'] );
+		        }
+		        ?>
             </div>
         </div>
 		<?php
@@ -228,6 +299,7 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
                         <span class="travel-tab__place">
                             <?php echo $summary_item['title']; ?>
                         </span>
+                        <span class="travel-tab__blurb"> <?php echo $summary_item['title_tag']; ?></span>
                         <?php echo $summary_item['description']; ?>
                     </div>
                 </li>
@@ -285,113 +357,98 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
         <?php
     }
 
-	protected function content_template(): void {
+	protected function content_template() {
 		?>
-        <#
-        // Check if any of the titles are set; if not, do not render the widget.
-        if ( '' === settings.summary_title && '' === settings.itinerary_title && '' === settings.accommodation_title ) {
-        return;
-        }
-        #>
-
         <div id="travel-tab">
-            <ul>
-                <# if ( settings.summary_title ) { #>
-                <li><a href="#summary_details">{{ settings.summary_title }}</a></li>
-                <# } #>
-                <# if ( settings.itinerary_title ) { #>
-                <li><a href="#itinerary_details">{{ settings.itinerary_title }}</a></li>
-                <# } #>
-                <# if ( settings.accommodation_title ) { #>
-                <li><a href="#accommodation_details">{{ settings.accommodation_title }}</a></li>
-                <# } #>
-            </ul>
+            <div class="travel-tab__nav">
+                <ul class="travel-tab__nav-list">
+                    <# if ( settings.summary_title ) { #>
+                    <li class="travel-tab__nav-item">
+                        <a href="#summary_details" class="travel-tab__nav-button" id="at-a-glance">
+                            {{ settings.summary_title }}
+                        </a>
+                    </li>
+                    <# } #>
+                    <# if ( settings.itinerary_title ) { #>
+                    <li class="travel-tab__nav-item">
+                        <a href="#itinerary_details" class="travel-tab__nav-button" id="itinerary">
+                            {{ settings.itinerary_title }}
+                        </a>
+                    </li>
+                    <# } #>
+                    <# if ( settings.accommodation_title ) { #>
+                    <li class="travel-tab__nav-item">
+                        <a href="#accommodation_details" class="travel-tab__nav-button" id="accommodation">
+                            {{ settings.accommodation_title }}
+                        </a>
+                    </li>
+                    <# } #>
+                    <# if ( settings.notes_title ) { #>
+                    <li class="travel-tab__nav-item">
+                        <a href="#notes_details" class="travel-tab__nav-button" id="notes">
+                            {{ settings.notes_title }}
+                        </a>
+                    </li>
+                    <# } #>
+                </ul>
+            </div>
 
             <div id="summary_details">
                 <# if ( settings.summary_items.length ) { #>
                 <div class="travel-tab__at-a-glance">
-                    <div class="travel-tab__at-a-glance-copy">
-                        <ul class="travel-tab__panel-list">
-                            <# _.each( settings.summary_items, function( item ) { #>
-                            <li class="travel-tab__panel-item travel-tab__panel-item--glance">
-                                <div class="travel-tab__day-wrap">
-                                    <span class="travel-tab__day travel-tab__day--glance">{{ item.day }}</span>
-                                </div>
-                                <div class="travel-tab__details">
-                                    <span class="travel-tab__place">{{ item.title }}</span>
-                                    {{{ item.description }}}
-                                </div>
-                            </li>
-                            <# }); #>
-                        </ul>
-                    </div>
+                    <ul class="travel-tab__panel-list">
+                        <# _.each( settings.summary_items, function( item ) { #>
+                        <li class="travel-tab__panel-item travel-tab__panel-item--glance">
+                            <div class="travel-tab__day-wrap">
+                                <span class="travel-tab__day travel-tab__day--glance">{{ item.day }}</span>
+                            </div>
+                            <div class="travel-tab__details">
+                                <span class="travel-tab__place">{{ item.title }}</span>
+                                <span class="travel-tab__blurb">{{ item.title_tag }}</span>
+                                {{{ item.description }}}
+                            </div>
+                        </li>
+                        <# } ); #>
+                    </ul>
                 </div>
                 <# } #>
             </div>
 
             <div id="itinerary_details">
                 <# if ( settings.itinerary_items.length ) { #>
-                <div class="travel-tab__accom-itin">
-                    <ul class="travel-tab__panel-list">
-                        <# _.each( settings.itinerary_items, function( item ) { #>
-                        <li class="travel-tab__panel-item">
-                            <div class="travel-tab__day-wrap">
-                                <span class="travel-tab__day">{{ item.day }}</span>
-                            </div>
-                            <div class="travel-tab__info">
-                                <div class="travel-tab__accom-itin-header">
-                                    <p class="travel-tab__place">{{ item.title }}</p>
-                                </div>
-                                <div class="travel-tab__accom-itin-copy">
-                                    <div class="travel-tab__slider">
-                                        <# _.each( item.gallery, function( image ) { #>
-                                        <figure class="travel-tab__slider-figure">
-                                            <img class="travel-tab__slider-img" src="{{ image.url }}" alt="">
-                                        </figure>
-                                        <# }); #>
-                                    </div>
-                                    <div class="travel-tab__main">
-                                        {{{ item.details }}}
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <# }); #>
-                    </ul>
-                </div>
+                <ul class="travel-tab__panel-list">
+                    <# _.each( settings.itinerary_items, function( item ) { #>
+                    <li class="travel-tab__panel-item">
+                        <span class="travel-tab__day">{{ item.day }}</span>
+                        <span class="travel-tab__title">{{ item.title }}</span>
+                        {{{ item.details }}}
+                    </li>
+                    <# } ); #>
+                </ul>
                 <# } #>
             </div>
 
             <div id="accommodation_details">
                 <# if ( settings.accommodation_items.length ) { #>
-                <div class="travel-tab__accom-itin">
-                    <ul class="travel-tab__panel-list">
-                        <# _.each( settings.accommodation_items, function( item ) { #>
-                        <li class="travel-tab__panel-item">
-                            <div class="travel-tab__day-wrap">
-                                <span class="travel-tab__day">{{ item.day }}</span>
-                            </div>
-                            <div class="travel-tab__info">
-                                <div class="travel-tab__accom-itin-header">
-                                    <p class="travel-tab__place">{{ item.title }}</p>
-                                </div>
-                                <div class="travel-tab__accom-itin-copy">
-                                    <div class="travel-tab__slider">
-                                        <# _.each( item.gallery, function( image ) { #>
-                                        <figure class="travel-tab__slider-figure">
-                                            <img class="travel-tab__slider-img" src="{{ image.url }}" alt="">
-                                        </figure>
-                                        <# }); #>
-                                    </div>
-                                    <div class="travel-tab__main">
-                                        {{{ item.details }}}
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <# }); #>
-                    </ul>
+                <ul class="travel-tab__panel-list">
+                    <# _.each( settings.accommodation_items, function( item ) { #>
+                    <li class="travel-tab__panel-item">
+                        <span class="travel-tab__day">{{ item.day }}</span>
+                        <span class="travel-tab__title">{{ item.title }}</span>
+                        {{{ item.details }}}
+                    </li>
+                    <# } ); #>
+                </ul>
+                <# } #>
+            </div>
+
+            <div id="notes_details">
+                <# if ( settings.template_id ) { #>
+                <div class="travel-tab__template">
+					<?php echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( '{{ settings.template_id }}' ); ?>
                 </div>
+                <# } else { #>
+                <p><?php echo esc_html__( 'No template selected.', 'elementor-travel-tabs-widget' ); ?></p>
                 <# } #>
             </div>
         </div>

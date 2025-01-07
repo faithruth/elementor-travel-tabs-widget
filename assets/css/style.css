@@ -3,6 +3,10 @@
 #accommodation_details {
     display: none;
 }
+ul.travel-tab__panel-list {
+    margin-left: 0;
+    padding-left: 0;
+}
 .travel-tab__panel-list {
     margin-bottom: 1.5rem;
     list-style: none;
@@ -30,6 +34,7 @@
 .travel-tab__at-a-glance {
     padding: 0 .75rem;
     margin-bottom: 2rem;
+    padding-left: 0;
 }
 .travel-tab__day-wrap {
     position: relative;
@@ -41,7 +46,7 @@
     margin-bottom: .5rem;
     transition: all .25s ease 0s;
     position: sticky;
-    top: 9.0625rem;
+    top: 12.1875rem;
 }
 .travel-tab__day:after {
     content: "";
@@ -65,7 +70,9 @@
     text-transform: uppercase;
     margin-bottom: .5rem;
 }
-
+.travel-tab__blurb {
+    display: block
+}
 .travel-tab__panel-item:after {
     content: "";
     position: absolute;
@@ -81,6 +88,7 @@
 }
 .elementor-widget-container .ui-widget.ui-widget-content {
     border: none;
+    background: inherit;
 }
 .ui-tabs .ui-tabs-nav {
     background-color: transparent;
@@ -130,13 +138,50 @@
 .travel-tab__slider .tns-nav [data-nav]:first-child {
     margin-left: 0;
 }
+
+.travel-tab__slider .progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    background: #665269;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: .1875rem
+}
+
+.travel-tab__slider .progress-bar-animation {
+    width: 100% !important;
+    animation: progress-bar 5s linear
+}
+
+
+.travel-tab__slider .progress-bar-hide {
+    width: 0 !important;
+    left: -100%
+}
+@keyframes progress-bar {
+    0% {
+        left: -100%
+    }
+
+    to {
+        left: 0
+    }
+}
+
 .travel-tab__slider .tns-nav [data-nav] {
     position: relative;
     height: .1875rem;
-    background-color: inherit;
+    background-color: #fdf9ec;
     border-radius: 0625rem;
     overflow: hidden;
-    padding: 3px;
+    padding: .1rem;
 }
 .travel-tab__slider .progress-bar {
     background: #665269;
@@ -190,14 +235,14 @@
     position: sticky;
     top: 3.125rem;
     padding: 0 .75rem;
-    background-color: inherit;
+    background-color: #FDF9EC;
 }
-.travel-tab .ui-widget-content {
+#travel-tab .ui-widget-content {
     background: inherit;
 }
-.travel-tab .ui-state-default.travel-tab__nav-item,
-.travel-tab .ui-widget-content .ui-state-default.travel-tab__nav-item,
-.travel-tab .ui-widget-header .ui-state-default.travel-tab__nav-item {
+.ui-state-default.travel-tab__nav-item,
+.ui-widget-content .ui-state-default.travel-tab__nav-item,
+.ui-widget-header .ui-state-default.travel-tab__nav-item {
     background-color: transparent;
     border: none;
     border-radius: 0;
@@ -209,9 +254,9 @@
     border-bottom: 4px solid #767260;
 }
 .travel-tab__nav-button.ui-tabs-anchor,
-.travel-tab .ui-state-active a.travel-tab__nav-button,
-.travel-tab .ui-state-active a.travel-tab__nav-button:link,
-.travel-tab .ui-state-active a.travel-tab__nav-button:visited
+.ui-state-active a.travel-tab__nav-button,
+.ui-state-active a.travel-tab__nav-button:link,
+.ui-state-active a.travel-tab__nav-button:visited
 {
     color: #3a2f3c;
 }
@@ -222,6 +267,9 @@
     }
     .travel-tab__place {
         width: 34.25rem;
+    }
+    .travel-tab__blurb {
+        display:inline
     }
     .travel-tab__panel-item:after {
         top: 1.375rem;
@@ -270,7 +318,7 @@
         padding: .5rem 0 1rem
     }
     .travel-tab__nav {
-        top: 3.125rem;
+        top: 5.125rem;
     }
 
 }
