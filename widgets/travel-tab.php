@@ -268,6 +268,126 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 			]
 		);
 		$this->end_controls_section();
+		// Style Button Section
+		$this->start_controls_section(
+			'style_button',
+			[
+				'label' => __( 'Button', 'elementor-travel-tabs-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+// Button Text Color
+		$this->add_control(
+			'button_text_color',
+			[
+				'label' => __( 'Text Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#767260',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+// Button Background Color
+		$this->add_control(
+			'button_bg_color',
+			[
+				'label' => __( 'Background Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => 'transparent',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+// Button Hover Background Color
+		$this->add_control(
+			'button_hover_bg_color',
+			[
+				'label' => __( 'Hover Background Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#767260',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+// Button Hover Text Color
+		$this->add_control(
+			'button_hover_text_color',
+			[
+				'label' => __( 'Hover Text Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#fdf9ec',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+// Typography for Buttons
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'label' => __( 'Typography', 'elementor-travel-tabs-widget' ),
+				'selector' => '{{WRAPPER}} .travel-tab__button',
+			]
+		);
+
+// Button Padding
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label' => __( 'Padding', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'default' => [
+					'top' => 10,
+					'right' => 20,
+					'bottom' => 10,
+					'left' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+// Button Border
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'button_border',
+				'label' => __( 'Border', 'elementor-travel-tabs-widget' ),
+				'selector' => '{{WRAPPER}} .travel-tab__button',
+			]
+		);
+
+    // Button Border Radius
+		$this->add_control(
+			'button_border_radius',
+			[
+				'label' => __( 'Border Radius', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 	}
 
     private function tab_section( $tab ) {
