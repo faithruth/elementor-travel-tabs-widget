@@ -140,7 +140,134 @@ class Elementor_Travel_Tabs_Widget extends \Elementor\Widget_Base {
 		$this->end_controls_section();
 
 		// Content Tab End
+		// Content Tab Controls (Already provided)
+		$this->start_controls_section(
+			'summary_tab',
+			[
+				'label' => __( 'Summary Tab', 'elementor-travel-tabs-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'summary_title',
+			[
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'label' => esc_html__( 'Title', 'elementor-travel-tabs-widget' ),
+				'placeholder' => esc_html__( 'Enter tab title', 'elementor-travel-tabs-widget' ),
+				'default' => 'At a glance',
+			]
+		);
+		$this->end_controls_section();
 
+		// Style Tab Navigation
+		$this->start_controls_section(
+			'style_tab_navigation',
+			[
+				'label' => __( 'Tab Navigation', 'elementor-travel-tabs-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'tab_nav_bg_color',
+			[
+				'label' => __( 'Background Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#FCF9EC',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__nav' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tab_nav_text_color',
+			[
+				'label' => __( 'Text Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__nav-button' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'tab_nav_typography',
+				'label' => __( 'Typography', 'elementor-travel-tabs-widget' ),
+				'selector' => '{{WRAPPER}} .travel-tab__nav-button',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'tab_nav_border',
+				'label' => __( 'Border', 'elementor-travel-tabs-widget' ),
+				'selector' => '{{WRAPPER}} .travel-tab__nav',
+			]
+		);
+		$this->end_controls_section();
+
+		// Style Itinerary Tab
+		$this->start_controls_section(
+			'style_tabs',
+			[
+				'label' => __( 'Tab Content Styles', 'elementor-travel-tabs-widget' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'itinerary_title_color',
+			[
+				'label' => __( 'Title Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#3a2f3c',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__day-wrap' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .travel-tab__accom-itin-header' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .travel-tab__details' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'itinerary_typography',
+				'label' => __( 'Typography', 'elementor-travel-tabs-widget' ),
+				'selectors' => [
+                    '{{WRAPPER}} .travel-tab__day-wrap',
+					'{{WRAPPER}} .travel-tab__accom-itin-header',
+					'{{WRAPPER}} .travel-tab__details',
+                ]
+			]
+		);
+		$this->add_control(
+			'itinerary_detail_color',
+			[
+				'label' => __( 'Description Color', 'elementor-travel-tabs-widget' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .travel-tab__main' => 'color: {{VALUE}};',
+				],
+			]
+		);
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'itinerary_image_border',
+				'label' => __( 'Image Border', 'elementor-travel-tabs-widget' ),
+				'selectors' => [
+                        '{{WRAPPER}} .travel-tab__slider figure img',
+                ],
+			]
+		);
+		$this->end_controls_section();
 	}
 
     private function tab_section( $tab ) {
