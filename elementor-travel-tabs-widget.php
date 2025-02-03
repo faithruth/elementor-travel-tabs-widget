@@ -55,8 +55,10 @@ add_action( 'elementor/editor/after_enqueue_styles', 'ettw_enqueue_script' );
 function ettw_register_travel_tab_widget( $widgets_manager ) {
 
 	require_once( __DIR__ . '/widgets/travel-tab.php' );
-
 	$widgets_manager->register( new \Elementor_Travel_Tabs_Widget() );
+
+	require_once( __DIR__ . '/widgets/pricing.php' );
+	$widgets_manager->register( new \Elementor_Travel_Pricing_Widget() );
 
 }
 add_action( 'elementor/widgets/register', 'ettw_register_travel_tab_widget' );

@@ -195,6 +195,12 @@ ul.travel-tab__panel-list {
     width: 100%;
     height: .1875rem;
 }
+.pricing-widget-vertical > div {
+    display: block;
+}
+.pricing-widget-horizontal > div{
+    display: inline-block;
+}
 .travel-tab__slider .tns-outer [data-action=start], .travel-tab__slider .tns-outer [data-action=stop] {
     position: absolute !important;
     height: 1px;
