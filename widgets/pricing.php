@@ -41,6 +41,9 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				'label' => __('Period', 'plugin-name'),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => __('days', 'plugin-name'),
+				'dynamic' => [
+					'active' => true, // Enable dynamic tags (ACF, etc.)
+				],
 			]
 		);
 
@@ -59,6 +62,9 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				'label' => __('Price', 'plugin-name'),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => __('$10,755 USD', 'plugin-name'),
+				'dynamic' => [
+					'active' => true, // Enable dynamic tags (ACF, etc.)
+				],
 			]
 		);
 
