@@ -201,6 +201,9 @@ ul.travel-tab__panel-list {
 .pricing-widget-horizontal > div{
     display: inline-block;
 }
+.pricing-widget-horizontal > * div {
+    display: inline-block;
+}
 .travel-tab__slider .tns-outer [data-action=start], .travel-tab__slider .tns-outer [data-action=stop] {
     position: absolute !important;
     height: 1px;

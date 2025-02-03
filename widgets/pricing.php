@@ -127,7 +127,66 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				],
 			]
 		);
+		// Add Padding Control
+		$this->add_control(
+			'padding',
+			[
+				'label' => esc_html__( 'Padding', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'default' => [
+					'top' => 2,
+					'right' => 0,
+					'bottom' => 2,
+					'left' => 0,
+					'unit' => 'em',
+					'isLinked' => false,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .pricing-duration, {{WRAPPER}} .pricing-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'layout' => 'vertical',
+				],
+			]
+		);
 
+		// Text Alignment
+		$this->add_responsive_control(
+			'text_align',
+			[
+				'label' => __('Text Alignment', 'plugin-name'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __('Left', 'plugin-name'),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __('Center', 'plugin-name'),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __('Right', 'plugin-name'),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .pricing-widget' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_section();
+
+		// START STYLE SECTION
+		$this->start_controls_section(
+			'dureation_section',
+			[
+				'label' => __('Duration Styles', 'plugin-name'),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
 		// TYPOGRAPHY CONTROLS FOR EACH FIELD
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
@@ -143,6 +202,9 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				'name' => 'duration_border',
 				'label' => __('Duration border', 'plugin-name'),
 				'selector' => '{{WRAPPER}} .pricing-duration',
+				'condition' => [
+					'layout' => 'vertical',
+				],
 			]
 		);
 
@@ -152,6 +214,16 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				'name' => 'period_typography',
 				'label' => __('Period Typography', 'plugin-name'),
 				'selector' => '{{WRAPPER}} .pricing-period',
+			]
+		);
+		$this->end_controls_section();
+
+		// START STYLE SECTION
+		$this->start_controls_section(
+			'price_section',
+			[
+				'label' => __('Price Styles', 'plugin-name'),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -181,7 +253,6 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 				'selector' => '{{WRAPPER}} .pricing-label',
 			]
 		);
-
 		$this->end_controls_section();
 	}
 
@@ -191,9 +262,11 @@ class Elementor_Travel_Pricing_Widget extends \Elementor\Widget_Base {
 
 		echo '<div class="pricing-widget ' . esc_attr($layout_class) . '">';
 		echo '<div class="pricing-duration">' . esc_html($settings['duration']) . '<span class="pricing-period"> ' . esc_html($settings['period']) . '</span></div> ';
+		echo '<div class="pricing-section">';
 		echo '<div class="pricing-price-prefix">' . esc_html($settings['price_prefix']) . '</div> ';
 		echo '<div class="pricing-price">' . esc_html($settings['price']) . '</div> ';
 		echo '<div class="pricing-label">' . esc_html($settings['per_person_label']) . '</div>';
+		echo '</div>';
 		echo '</div>';
 	}
 }
