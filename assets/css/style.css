@@ -219,6 +219,7 @@ ul.travel-tab__panel-list {
     font-size: .875rem;
     line-height: 1.125rem;
     padding: 0 0 .25rem;
+    flex-wrap: wrap;
 }
 .travel-tab__nav-item {
     border: none;
